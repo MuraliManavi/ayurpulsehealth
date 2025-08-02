@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Live BPM Monitor</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f9ff;
+      text-align: center;
+      padding-top: 50px;
+    }
+    .card {
+      display: inline-block;
+      padding: 40px;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #007acc;
+      font-size: 36px;
+    }
+    #bpm {
+      font-size: 60px;
+      color: #ff0033;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Live Heart Rate</h1>
+    <div id="bpm">--</div>
+  </div>
+
+  <script>
+    // Your Firebase project configuration
+    var firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Reference to the database path for BPM
+    var bpmRef = firebase.database().ref("pulseData/bpm");
+
+    // Listen for changes and update the page
+    bpmRef.on("value", function(snapshot) {
+      var bpmValue = snapshot.val();
+      document.getElementById("bpm").textContent = bpmValue;
+    });
+  </script>
+</body>
+</html>

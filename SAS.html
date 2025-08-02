@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Murali Vara Prasad – Pulse Health System</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/7664/7664104.png" type="image/png">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4fdf8;
+      margin: 0;
+      padding: 0;
+      color: #2b4a2f;
+    }
+    header {
+      background-color: #2e7d32;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+    header img {
+      width: 50px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    section {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    .card {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+    }
+    .data {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #c8e6c9;
+      margin-top: 2rem;
+      color: #1b5e20;
+    }
+    .ip-address {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      background: #e8f5e9;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://cdn-icons-png.flaticon.com/512/7664/7664104.png" alt="Plant Logo">
+    <h1>Murali Vara Prasad</h1>
+    <p>Pulse Intelligence Device - Merging Ancient Wisdom with Modern Tech</p>
+  </header>
+
+  <section>
+    <div class="card">
+      <h2>🩺 Project Description</h2>
+      <p>
+        This device uses three pulse sensors (Vata, Pitta, Kapha) and compares the rhythms to ancient Ayurvedic interpretations and animal walking patterns. It can detect abnormal pulse states such as fever or stress by analyzing BPM and rhythm and giving alerts through GSM or web.
+      </p>
+      <p>
+        Inspired by ancient traditions and implemented using ESP32, GPS, GSM, and biomedical sensors.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>📊 Live Pulse Data</h2>
+      <p class="data"><strong>Vata BPM:</strong> <span id="vataBpm">--</span></p>
+      <p class="data"><strong>Pitta BPM:</strong> <span id="pittaBpm">--</span></p>
+      <p class="data"><strong>Kapha BPM:</strong> <span id="kaphaBpm">--</span></p>
+      <p class="data"><strong>Status:</strong> <span id="status">Waiting for ESP32 data...</span></p>
+    </div>
+
+    <div class="ip-address">
+      <strong>Device IP Address:</strong> <span id="ipAddress"><a href="http://192.168.4.1" target="_blank">192.168.4.1</a></span>
+      <p style="font-size: 0.9rem; color: #2e7d32;">Connect to this IP address in your browser when connected to the ESP32 Wi-Fi network.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Murali Vara Prasad | Designed with Nature 🌱 and Knowledge</p>
+  </footer>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC1VILxWZov40xVEkK2Ba9owr73C4UNG6o",
+      authDomain: "murali-pulse-system.firebaseapp.com",
+      projectId: "murali-pulse-system",
+      storageBucket: "murali-pulse-system.firebasestorage.app",
+      messagingSenderId: "299265496455",
+      appId: "1:299265496455:web:6d2a7b9025982ddd43af22",
+      measurementId: "G-W45Y7BQBSL",
+      databaseURL: "https://murali-pulse-system-default-rtdb.firebaseio.com"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function updateLiveData(snapshot) {
+      const data = snapshot.val();
+      if (!data) return;
+      document.getElementById("vataBpm").textContent = data.vata || '--';
+      document.getElementById("pittaBpm").textContent = data.pitta || '--';
+      document.getElementById("kaphaBpm").textContent = data.kapha || '--';
+      document.getElementById("status").textContent = data.status || 'No status';
+    }
+
+    db.ref("pulseData").on("value", updateLiveData);
+  </script>
+</body>
+</html>

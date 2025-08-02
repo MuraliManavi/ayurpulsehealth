@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AyurPulse - Health Monitoring System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e3f2fd, #ffecb3, #e0f7fa);
+      color: #333;
+    }
+    header {
+      background-color: #004d40;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: white;
+      text-decoration: none;
+    }
+    .hero {
+      padding: 2rem;
+      background: linear-gradient(to right, #b3e5fc, #c8e6c9);
+      text-align: center;
+    }
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .location-bar, .ip-bar {
+      background: #ff7043;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+    .motto {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      background: linear-gradient(90deg, #ff8a65, #ffd54f);
+      color: #212121;
+      font-weight: bold;
+    }
+    .safety {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      background: linear-gradient(90deg, #81c784, #64b5f6);
+      color: #212121;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #004d40;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function updateIP() {
+      const ipBar = document.getElementById("ip-bar");
+      db.ref("/device/ip").on("value", (snapshot) => {
+        const ip = snapshot.val();
+        if (ip) {
+          ipBar.textContent = "Device IP (Class A IPv4): " + ip;
+        } else {
+          ipBar.textContent = "Device IP not found";
+        }
+      });
+    }
+
+    window.onload = updateIP;
+  </script>
+</head>
+<body>
+  <header>
+    <h1>AyurPulse Health Monitor</h1>
+    <nav>
+      <a href="#live">Live Data</a>
+      <a href="#features">Features</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="location-bar">Your Location: [GPS coordinates coming soon]</div>
+  <div id="ip-bar" class="ip-bar">Loading device IP...</div>
+  <div class="safety">SAS - Safety & Security</div>
+  <div class="motto">Health is Wealth</div>
+
+  <section class="hero">
+    <h2>Real-Time Health Monitoring Based on Ayurvedic Principles</h2>
+    <p>Track your Vata, Pitta, Kapha pulse data, SpO2, temperature, and location from any device.</p>
+  </section>
+  <section class="content" id="features">
+    <div class="card">
+      <h3>Live Vitals Dashboard</h3>
+      <ul>
+        <li>BPM for Vata, Pitta, Kapha</li>
+        <li>SpO2 & Temperature Readings</li>
+        <li>Real-Time Clock</li>
+        <li>Emergency SOS Status</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Device Features</h3>
+      <ul>
+        <li>ESP32 + GSM + GPS + RTC</li>
+        <li>MAX30102, DS18B20, 3 Pulse Sensors</li>
+        <li>SMS & Call Alerts</li>
+        <li>Mobile & Web Integration</li>
+      </ul>
+    </div>
+  </section>
+  <section class="hero" id="live">
+    <h2>Live Data</h2>
+    <p>Coming soon: connect your ESP32 device to view real-time vitals here.</p>
+  </section>
+  <footer id="contact">
+    <p>Contact us: support@ayurpulse.io | &copy; 2025 AyurPulse Technologies</p>
+  </footer>
+</body>
+</html>
