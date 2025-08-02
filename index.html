@@ -2,26 +2,26 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Live BPM Monitor</title>
+  <title>Live Pulse Monitor</title>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f2f9ff;
+      background: #f4faff;
       text-align: center;
-      padding-top: 50px;
+      margin-top: 100px;
     }
     .card {
       display: inline-block;
+      background: #ffffff;
       padding: 40px;
       border-radius: 20px;
-      background: #ffffff;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
     h1 {
-      color: #007acc;
       font-size: 36px;
+      color: #007acc;
     }
     #bpm {
       font-size: 60px;
@@ -32,12 +32,12 @@
 </head>
 <body>
   <div class="card">
-    <h1>Live Heart Rate</h1>
+    <h1>Live BPM</h1>
     <div id="bpm">--</div>
   </div>
 
   <script>
-    // Your Firebase project configuration
+    // 🔁 Replace these values with your Firebase project details
     var firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -51,13 +51,12 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    // Reference to the database path for BPM
+    // Reference the BPM value in the database
     var bpmRef = firebase.database().ref("pulseData/bpm");
 
-    // Listen for changes and update the page
+    // Listen for live updates
     bpmRef.on("value", function(snapshot) {
-      var bpmValue = snapshot.val();
-      document.getElementById("bpm").textContent = bpmValue;
+      document.getElementById("bpm").innerText = snapshot.val();
     });
   </script>
 </body>
