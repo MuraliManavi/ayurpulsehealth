@@ -1,0 +1,6 @@
+// Simulated data
+setInterval(() => {
+  document.getElementById("pulse").innerText = "Pulse: " + Math.floor(60 + Math.random() * 40);
+  document.getElementById("temp").innerText = "Temperature: " + (36 + Math.random() * 2).toFixed(1) + " °C";
+  document.getElementById("spo2").innerText = "SpO2: " + Math.floor(95 + Math.random() * 5) + " %";
+}, 2000);

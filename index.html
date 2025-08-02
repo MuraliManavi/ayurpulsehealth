@@ -1,63 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Live Pulse Monitor</title>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4faff;
-      text-align: center;
-      margin-top: 100px;
-    }
-    .card {
-      display: inline-block;
-      background: #ffffff;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      font-size: 36px;
-      color: #007acc;
-    }
-    #bpm {
-      font-size: 60px;
-      color: #ff0033;
-      margin-top: 20px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AyurPulse - Health Monitoring System</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="card">
-    <h1>Live BPM</h1>
-    <div id="bpm">--</div>
-  </div>
+  <header>
+    <h1>AyurPulse</h1>
+    <p>Ancient Wisdom with Modern Health Tech</p>
+  </header>
 
-  <script>
-    // 🔁 Replace these values with your Firebase project details
-    var firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+  <main>
+    <section id="live-data">
+      <h2>Live Health Data</h2>
+      <div id="pulse">Pulse: --</div>
+      <div id="temp">Temperature: --</div>
+      <div id="spo2">SpO2: --</div>
+    </section>
+  </main>
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+  <footer>
+    <p>© 2025 AyurPulse. All rights reserved.</p>
+  </footer>
 
-    // Reference the BPM value in the database
-    var bpmRef = firebase.database().ref("pulseData/bpm");
-
-    // Listen for live updates
-    bpmRef.on("value", function(snapshot) {
-      document.getElementById("bpm").innerText = snapshot.val();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
