@@ -1,6 +1,21 @@
-// Simulated data
-setInterval(() => {
-  document.getElementById("pulse").innerText = "Pulse: " + Math.floor(60 + Math.random() * 40);
-  document.getElementById("temp").innerText = "Temperature: " + (36 + Math.random() * 2).toFixed(1) + " °C";
-  document.getElementById("spo2").innerText = "SpO2: " + Math.floor(95 + Math.random() * 5) + " %";
-}, 2000);
+const firebaseConfig = {
+  apiKey: "AIzaSyC1VILxWZov40xVEkK2Ba9owr73C4UNG6o",
+  authDomain: "murali-pulse-system.firebaseapp.com",
+  projectId: "murali-pulse-system",
+  storageBucket: "murali-pulse-system.appspot.com",
+  messagingSenderId: "299265496455",
+  appId: "1:299265496455:web:6d2a7b9025982ddd43af22",
+  measurementId: "G-W45Y7BQBSL",
+  databaseURL: "https://murali-pulse-system-default-rtdb.firebaseio.com/"
+};
+
+firebase.initializeApp(firebaseConfig);
+const dbRef = firebase.database().ref("pulseData");
+
+dbRef.on("value", (snapshot) => {
+  const data = snapshot.val();
+  document.getElementById("vata").textContent = data.vata || "--";
+  document.getElementById("pitta").textContent = data.pitta || "--";
+  document.getElementById("kapha").textContent = data.kapha || "--";
+  document.getElementById("status").textContent = data.status || "Waiting...";
+});
